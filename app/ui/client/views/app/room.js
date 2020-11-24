@@ -703,6 +703,79 @@ Template.roomOld.events({
 			jump: tmid && tmid !== _id && _id && _id,
 		});
 	},
+
+	'click .attachment-button'(e, t) {
+		e.preventDefault();
+		let _self = e.target;
+		let user = Meteor.user();
+		let attachmentIndex = -1;
+		let responseUrl = null;
+
+		const btn_msg_id  = e.currentTarget.closest('.message').dataset.id;
+		//console.log('dubug "e.currentTarget.closest(\'.message\').dataset.id"');
+		//console.log(message_id);
+
+		//const msg = messageArgs(this);
+		//console.log('dubug "msg"');
+		//console.log(msg);
+		//console.log('dubug "this"');
+		//console.log(this);
+		//let test_m  = t.closest('.message').dataset;
+		//console.log('dubug "test_m"');
+		//console.log(test_m);
+		//let msg_test = messageArgs(_self);
+		//console.log('dubug "msg_test"');
+		//console.log(msg_test);
+
+
+		//let message = ChatMessage.findOne({ _id: this._arguments[1]._id });
+		let message = ChatMessage.findOne({ _id: btn_msg_id });
+
+		let postData = {
+			name: _self.name,
+			username: user.username,
+			user_id: user._id,
+			value: _self.value,
+			message_id: btn_msg_id
+		};
+		//console.log(postData);
+
+		for (let i in message.attachments) {
+			if (message.attachments[i].callback_id == _self.value) {
+				responseUrl = message.attachments[i].callback_url;
+				attachmentIndex = i;
+				break;
+			}
+		}
+
+		if (!message.action_is_disabled && responseUrl && attachmentIndex !== -1) {
+			message.action_is_disabled = true;
+			Meteor.call('updateMessage', message);
+
+			jQuery.ajax({
+				method: 'POST',
+				url: responseUrl,
+				data: postData,
+				success: function(result) {
+					console.log(result);
+					if (result.response_text) {
+						let msg = ChatMessage.findOne({ _id: result.message_id });
+						msg.attachments[attachmentIndex].response_text = result.response_text;
+						Meteor.call('updateMessage', msg);
+					} else {
+						message.action_is_disabled = false;
+						Meteor.call('updateMessage', message);
+					}
+				},
+				error: function(xhr, status, errorThrown) {
+					message.action_is_disabled = false;
+					Meteor.call('updateMessage', message);
+					console.log(message);
+				}
+			});
+		}
+	},
+
 	'click .js-reply-broadcast'() {
 		const msg = messageArgs(this);
 		roomTypes.openRouteLink('d', { name: msg.u.username }, { ...FlowRouter.current().queryParams, reply: msg._id });

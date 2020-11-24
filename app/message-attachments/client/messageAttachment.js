@@ -137,6 +137,23 @@ Template.messageAttachment.helpers({
 		return false;
 	},
 	getURL,
+	initCallbackIdInActions() {
+		for (let i in this.actions) {
+			this.actions[i].callback_id = this.callback_id
+		}
+	},
+	parsedResponseText() {
+		var msg = {};
+		var responseText = renderMessageBody({
+			msg: this.response_text
+		});
+
+		msg.html = responseText;
+		msg.temp = true;
+
+		msg = RocketChat.callbacks.run('renderMentions', msg);
+		return msg.html;
+	},
 });
 
 Template.messageAttachment.onRendered(function() {
