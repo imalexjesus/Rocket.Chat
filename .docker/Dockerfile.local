@@ -1,0 +1,143 @@
+
+
+
+
+
+ROCKET.OILER.UA
+зайди пощупай 12 ядер и 64 оперативки
+root@135.181.112.252 - 7D3MFBa2cxgUsb
+===================================
+
+
+root
+.............
+ssh root@135.181.112.252
+7D3MFBa2cxgUsb
+
+
+
+
+
+
+
+
+
+
+chat-user https://rocket.oiler.ua/home
+===================================
+
+
+a.test@oiler.ua
+alexj
+..........
+alloha
+
+
+
+docker-compose run docker-rocket-oiler-ua_mongo_1 bash
+
+5a6071811c95
+
+docker exec -it -u root mongo-image /bin/bash
+
+docker exec -t 5a6071811c95 mongo
+
+
+
+Reset user role to "admin"
+db.users.update({username:"alexj"}, {$set: {'roles' : [ "admin" ]}})
+
+
+$2y$10$dnRdtW2Qm93AxVdHs8b.3.nLsU9jP/FFwCs68.Q/oxi8K7fx0ymbi 
+
+
+
+tchat
+rs0:PRIMARY> show dbs
+admin       0.031GB
+config      0.031GB
+local       0.281GB
+rocketchat  0.063GB
+rs0:PRIMARY> db.getCollection('users').update({username:"alexj"}, { $set: {"services" : { "password" : {"bcrypt" : "2a10n9CM8OgInDlwpvjLKLPML.eizXIzLlRtgCh3GRLafOdR9ldAUh/KG" } } } })
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 0 })
+rs0:PRIMARY> db.users.update({username:"alexj"}, {$set: {'roles' : [ "admin" ]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 0 })
+rs0:PRIMARY> root@rocket:~/docker-rocket-oiler-ua# docker exec -it -u root 62f5baeb3d44 /bin/bash
+Error: No such container: 62f5baeb3d44
+root@rocket:~/docker-rocket-oiler-ua# sudo docker ps -a
+CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS                          PORTS
+                                   NAMES
+75d69c41c682        rocketchat/hubot-rocketchat:latest   "/bin/sh -c 'node -e…"   4 minutes ago       Restarting (1) 47 seconds ago
+                                   docker-rocket-oiler-ua_hubot_1
+dd4e693dbf89        mongo:4.0                            "docker-entrypoint.s…"   4 minutes ago       Exited (0) 4 minutes ago
+                                   docker-rocket-oiler-ua_mongo-init-replica_1
+9a5ed7ba9967        rocketchat/rocket.chat:latest        "docker-entrypoint.s…"   4 minutes ago       Up 4 minutes                    0.0.0.0:3000->3000/tcp
+                                   docker-rocket-oiler-ua_rocketchat_1
+0072557cb830        mongo:4.0                            "docker-entrypoint.s…"   4 minutes ago       Up 4 minutes                    0.0.0.0:27017->27017/tcp
+                                   docker-rocket-oiler-ua_mongo_1
+68f21dd5d539        sebp/elk                             "/usr/local/bin/star…"   19 hours ago        Exited (1) 18 hours ago
+                                   container_elk
+c477d2482df6        autoorder_nginx                      "nginx"                  19 hours ago        Up 19 hours                     443/tcp, 0.0.0.0:8080->80/tcp
+                                   container_nginx
+33e2f199b95b        autoorder_php                        "docker-php-entrypoi…"   19 hours ago        Up 19 hours                     9000/tcp
+                                   container_php
+2066e6d2edc4        rabbitmq:3-management                "docker-entrypoint.s…"   22 hours ago        Up 19 hours                     4369/tcp, 5671/tcp, 0.0.0.0:5672->5672/tcp, 15671/tcp, 15691-15692/tcp, 25672/tcp, 0.0.0.0:15672->15672/tcp   container_rabbit
+645cea0f49e1        mysql                                "docker-entrypoint.s…"   22 hours ago        Up 19 hours                     0.0.0.0:3306->3306/tcp, 33060/tcp
+                                   container_mysql
+13910de39431        redis:alpine                         "docker-entrypoint.s…"   22 hours ago        Up 19 hours                     0.0.0.0:6379->6379/tcp
+                                   container_redis
+root@rocket:~/docker-rocket-oiler-ua# docker exec -it -u root 0072557cb830 /bin/bash
+root@0072557cb830:/# mongo
+MongoDB shell version v4.0.20
+connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("28d86220-8537-4022-9c01-41f4f2df527e") }
+MongoDB server version: 4.0.20
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+        http://docs.mongodb.org/
+Questions? Try the support group
+        http://groups.google.com/group/mongodb-user
+Server has startup warnings:
+2020-10-22T09:11:14.757+0000 I STORAGE  [initandlisten]
+2020-10-22T09:11:14.757+0000 I STORAGE  [initandlisten] ** WARNING: Support for MMAPV1 storage engine has been deprecated and will be
+2020-10-22T09:11:14.757+0000 I STORAGE  [initandlisten] **          removed in version 4.2. Please plan to migrate to the wiredTiger
+2020-10-22T09:11:14.757+0000 I STORAGE  [initandlisten] **          storage engine.
+2020-10-22T09:11:14.757+0000 I STORAGE  [initandlisten]
+2020-10-22T09:11:14.772+0000 I CONTROL  [initandlisten]
+2020-10-22T09:11:14.772+0000 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2020-10-22T09:11:14.772+0000 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2020-10-22T09:11:14.772+0000 I CONTROL  [initandlisten]
+---
+Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+and anyone you share the URL with. MongoDB may use this information to make product
+improvements and to suggest MongoDB products and deployment options to you.
+
+To enable free monitoring, run the following command: db.enableFreeMonitoring()
+To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+
+rs0:PRIMARY> use rocketchat
+switched to db rocketchat
+rs0:PRIMARY>
+
+
+
+
+-------------------------------
+
+
+
+db.getCollection('users').update({username:"alexj"}, { $set: {"services" : { "password" : {"bcrypt" : "$2y$10$dnRdtW2Qm93AxVdHs8b.3.nLsU9jP/FFwCs68.Q/oxi8K7fx0ymbi " } } } })
+
+
+db.getCollection('users').update({username:"alexj"}, {$set: { "services":{"loginToken":{"token":"tt"}}, "requirePasswordChange":true} })
+
+db.users.update({username:"testtest"}, {$set: {'roles' : [ "admin" ]}})
+
+testtest
+testtest@oiler.ua
+alloha
