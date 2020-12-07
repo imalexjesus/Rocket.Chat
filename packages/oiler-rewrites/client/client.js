@@ -1,4 +1,4 @@
-import { callbacks } from '../../../app/callbacks';
+import { callbacks } from '../..//callbacks';
 
 function renderMessageOiler(message) {
 	if (message.html.indexOf(settings.get('Site_Url')) !== -1) {
